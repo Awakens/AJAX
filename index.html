@@ -2,10 +2,28 @@
 <html>
 <head>
 	<title>AJAX</title>
-	<link href="style.css" rel="stylesheet" /> <!-- link to css -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />   <!--for mobile? -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 </head>
 <body>
-	
+	<button onclick="performAJAX('ajax_info.txt', myFunction)">Click Me</button>
+	<p id="text">Change this text</p>
+		<img src="hourglass.gif" id="loadingImg">
+	<script>
+		function performAJAX(url, some_function) {                /* argument field allows this to act as manager of multiple AJAX tasks */
+			var xhttp = new XMLHttpRequest();
+			document.getElementById("text").innerHTML = "loading";  /* display text while getting data from ajax call*/
+			xhttp.onreadystatechange = function() {
+				if(xhttp.readyState == 4 && xhttp.status == 200) {
+					some_function(xhttp);
+				}
+			};
+			xhttp.open("GET", url, true);
+			xhttp.send();
+		}
+		function myFunction(xhttp) {
+			document.getElementById("text").innerHTML = "Hi there";
+		}
+	</script
 </body>
 </html>
