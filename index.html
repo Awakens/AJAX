@@ -6,11 +6,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 </head>
 <body>
-	<button onclick="performAJAX('ajax_info.txt', myFunction)">Click Me</button>
+	<button id="ClickButton">Click Me</button>
 	<p id="text">Change this text</p>
 		<img src="hourglass.gif" id="loadingImg">
 	<script>
-		function performAJAX(url, some_function) {                /* argument field allows this to act as manager of multiple AJAX tasks */
+		$("#loadingImg").hide();
+
+		/* Native implementation */
+		var performNativeAJAX = function(url, some_function) {     /* argument field allows this to act as manager of multiple AJAX tasks */
 			var xhttp = new XMLHttpRequest();
 			document.getElementById("text").innerHTML = "loading";  /* display text while getting data from ajax call*/
 			xhttp.onreadystatechange = function() {
@@ -18,12 +21,16 @@
 					some_function(xhttp);
 				}
 			};
+			$("#loadingImg").show();
 			xhttp.open("GET", url, true);
 			xhttp.send();
 		}
-		function myFunction(xhttp) {
+		var ChangeText = function (xhttp) {
 			document.getElementById("text").innerHTML = "Hi there";
+			$("#loadingImg").hide();
 		}
+
+		$("#ClickButton").click(function() {performNativeAJAX("ajax_info.txt", ChangeText)});
 	</script
 </body>
 </html>
